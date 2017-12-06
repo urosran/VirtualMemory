@@ -329,13 +329,6 @@ public class MyFileSystem implements FileSystem {
 		int blockNum = seekPtr / Disk.BLOCK_SIZE;
 		int blockOff = seekPtr % Disk.BLOCK_SIZE;
 
-		
-			//System.out.println(blockNum);
-			if (blockNum==16522) {
-				System.out.println("STOP");
-			}
-		
-		
 		// first indirection
 		if (blockNum > 9 && blockNum < (10 + IndirectBlock.COUNT)) {
 			// checking if there is an empty hole
@@ -530,46 +523,17 @@ public class MyFileSystem implements FileSystem {
 				&& blockNum < ((10 + IndirectBlock.COUNT + (IndirectBlock.COUNT * IndirectBlock.COUNT)
 						+ (IndirectBlock.COUNT * IndirectBlock.COUNT * IndirectBlock.COUNT)))) {
 
-			System.out.println("THIRDDDDDDDDDDDDDDDDDDDD");
-			
 			// checking if there is a hole
 			// obtain the spot of the node TODO: ASK WHY
 			// substract from block num whatever was second indirectrion
-//			int index1 = blockNum - 10 - (IndirectBlock.COUNT)- (IndirectBlock.COUNT * IndirectBlock.COUNT * IndirectBlock.COUNT) / (IndirectBlock.COUNT * IndirectBlock.COUNT);
-//			System.out.println(index1);
-//			int index2 = blockNum - 10 - (IndirectBlock.COUNT)- (IndirectBlock.COUNT * IndirectBlock.COUNT) / IndirectBlock.COUNT; 
-//			System.out.println(index2);		
-//			//% IndirectBlock.COUNT;
-//			int index3 = blockNum - 10 - (IndirectBlock.COUNT)- (IndirectBlock.COUNT * IndirectBlock.COUNT) % IndirectBlock.COUNT;
-//			System.out.println(index3);
-//			OVO RADI! 
-			System.out.println(blockNum);
-//			int index1 = ((blockNum - ((10 + IndirectBlock.COUNT)) / IndirectBlock.COUNT)/ IndirectBlock.COUNT * IndirectBlock.COUNT);
-//			int index2 = ((blockNum - (10 + IndirectBlock.COUNT)) / IndirectBlock.COUNT) / IndirectBlock.COUNT;
-//			int index3 = (blockNum - (10 + IndirectBlock.COUNT)) % IndirectBlock.COUNT;
-//			
+			int index1 = blockNum - 10 - (IndirectBlock.COUNT)- (IndirectBlock.COUNT * IndirectBlock.COUNT) / (IndirectBlock.COUNT * IndirectBlock.COUNT);
+			int index2 = blockNum - 10 - (IndirectBlock.COUNT)- (IndirectBlock.COUNT * IndirectBlock.COUNT) / IndirectBlock.COUNT; 
+					//% IndirectBlock.COUNT;
+			int index3 = blockNum - 10 - (IndirectBlock.COUNT)- (IndirectBlock.COUNT * IndirectBlock.COUNT) % IndirectBlock.COUNT;
+
 //			int index1 = (blockNum - ((10 + IndirectBlock.COUNT)) / IndirectBlock.COUNT)/ (IndirectBlock.COUNT * IndirectBlock.COUNT);
 //			int index2 = ((blockNum - (10 + IndirectBlock.COUNT)) / IndirectBlock.COUNT) / IndirectBlock.COUNT;
 //			int index3 = (blockNum - (10 + IndirectBlock.COUNT)) % IndirectBlock.COUNT;
-//			
-//			int index1 = ((blockNum - 10 - IndirectBlock.COUNT) / IndirectBlock.COUNT)/ (IndirectBlock.COUNT * IndirectBlock.COUNT);
-//			int index2 = ((blockNum - 10 - IndirectBlock.COUNT) / IndirectBlock.COUNT) / IndirectBlock.COUNT;
-//			int index3 = (blockNum - 10 - IndirectBlock.COUNT) % IndirectBlock.COUNT;
-			
-			
-			int index1 = (blockNum - (10 + IndirectBlock.COUNT + IndirectBlock.COUNT *  IndirectBlock.COUNT)) /  (IndirectBlock.COUNT *  IndirectBlock.COUNT);
-    		int index2 = ((blockNum - (10 + IndirectBlock.COUNT + IndirectBlock.COUNT *  IndirectBlock.COUNT)) %  (IndirectBlock.COUNT *  IndirectBlock.COUNT)) / IndirectBlock.COUNT;
-    		int index3 = ((blockNum - (10 + IndirectBlock.COUNT + IndirectBlock.COUNT *  IndirectBlock.COUNT)) %  (IndirectBlock.COUNT *  IndirectBlock.COUNT)) % IndirectBlock.COUNT;
-			
-			
-			
-			
-			System.out.println(index1);
-			System.out.println(index2);
-			System.out.println(index3);
-			
-			
-			
 
 			if (inode.ptr[12] == 0) {
 				// if read mode tell the OS that there is a hole
@@ -595,7 +559,6 @@ public class MyFileSystem implements FileSystem {
 
 					// add the newly created block if the space previously was empty
 					inode.ptr[12] = freeSpace1;
-					//System.out.println(index1);
 					indirectBlock.ptr[index1] = freeSpace2;
 					indirectBlock2.ptr[index2] = freeSpace3;
 					indirectBlock3.ptr[index3] = freeSpace4;

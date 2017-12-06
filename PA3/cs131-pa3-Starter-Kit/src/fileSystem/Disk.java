@@ -324,6 +324,11 @@ public class Disk {
 	 * @throws RuntimeException if blocknum is out of range
 	 */
 	private void seek(int blocknum) throws IOException {
+		if (blocknum < 0 || blocknum >= NUM_BLOCKS) {
+			System.out.println("kurac");
+			System.out.println(blocknum);
+		}
+		
 		if(blocknum < 0 || blocknum >= NUM_BLOCKS) {
 			throw new RuntimeException ("Attempt to read block " +
 					blocknum + " is out of range");
